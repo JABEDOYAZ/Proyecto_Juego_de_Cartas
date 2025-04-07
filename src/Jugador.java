@@ -90,26 +90,24 @@ public class Jugador {
                 }
             }
         }
-
-        for (int pinta = 0; pinta < matrizCartas.length; pinta++) {
-            for (int valor = 0; valor < matrizCartas[pinta].length; valor++) {
-                if (esParteDeEscalera[pinta][valor] && matrizCartas[pinta][valor] > 1) {// Si la carta forma parte de  una escalera y hay más de una carta
-                    matrizCartas[pinta][valor]--;
-                    contadores[valor]--;
-                } else if (esParteDeEscalera[pinta][valor]) { // Si la carta forma parte de una escalera
-                    contadores[valor]--;
-                }
-            }
-        }
         int puntos2 = 0; // Puntaje de las cartas que no forman grupos
         // Calcular el puntaje total
         for (int i = 0; i < contadores.length; i++) { // Para cada carta
-            if (contadores[i] == 1) { // Si hay una carta suelta
-                if (i == 0 || i >= 10) { // Si es un as o si es 10, jack, queen o king valen 10 puntos
-                    puntos2 += 10; 
-                } else { // Si es un 2, 3, 4, 5, 6, 7, 8 o 9
-                    puntos2 += i + 1; 
+            if (contadores[i] == 1 ) { // Si hay una carta suelta
+                for (int j = 0; j < numeroDePintas; j++) { // Para cada pinta
+                    if (esParteDeEscalera[j][i]) {
+                        puntos2 += 0; // Si la carta forma parte de una escalera, no cuenta
+                    }else if (!esParteDeEscalera[j][i] && matrizCartas[j][i] <  1) { // Si la carta no forma parte de una escalera y no hay más de una carta
+                        puntos2 += 0; // no cuenta
+                    }else if (matrizCartas[j][i] == 1 ) {
+                        if (i == 0 || i >= 10) { // Si es un as o si es 10, jack, queen o king valen 10 puntos
+                            puntos2 += 10; 
+                        } else { // Si es un 2, 3, 4, 5, 6, 7, 8 o 9
+                            puntos2 += i + 1; 
+                        }
+                    }
                 }
+                
             }
 
         }
